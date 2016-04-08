@@ -4,11 +4,14 @@ parameters:
 #    parameter_name: value
 
 services:
+<<<<<<< HEAD
     app.csvtoarray:
         class: AppBundle\Services\CsvToArray
     app.elasticsearch:
         class: AppBundle\Services\ElasticSearch
         arguments: ['127.0.0.1:9200']
+=======
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

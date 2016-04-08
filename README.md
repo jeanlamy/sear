@@ -9,6 +9,7 @@ To make experiment over technologies like ElasticSearch, Symfony 3, HHVM, Nginx 
 
 Search products information from the OpenFoodFacts database from various angles : product name, ingredient, additive,...
 
+<<<<<<< HEAD
 ### Usage of OpenFoodFacts database
 
 Elastic Indexation is based on the CSV files from OpenFoodFacts.org : 
@@ -18,7 +19,5 @@ Field Mapping can be found here :
 
 
 ### How can I run it?
-
-
 
 

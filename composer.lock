@@ -4,8 +4,13 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "23ce28edcddddf57132b93332c01e15f",
     "content-hash": "a7f87911aaf263a7c9aa043a35852a98",
+=======
+    "hash": "bcc5de4a66ee182621da725b4770749a",
+    "content-hash": "e89679b9f054f3ca7b6ea65059d81ed5",
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -774,6 +779,7 @@
             "time": "2016-01-05 21:34:58"
         },
         {
+<<<<<<< HEAD
             "name": "elasticsearch/elasticsearch",
             "version": "v2.1.5",
             "source": {
@@ -929,6 +935,8 @@
             "time": "2014-10-12 19:18:40"
         },
         {
+=======
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
             "name": "incenteev/composer-parameter-handler",
             "version": "v2.1.2",
             "source": {
@@ -1030,6 +1038,7 @@
             "time": "2014-01-12 16:20:24"
         },
         {
+<<<<<<< HEAD
             "name": "kriswallsmith/assetic",
             "version": "v1.3.2",
             "source": {
@@ -1118,6 +1127,19 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/Seldaek/monolog/zipball/064b38c16790249488e7a8b987acf1c9d7383c09",
                 "reference": "064b38c16790249488e7a8b987acf1c9d7383c09",
+=======
+            "name": "monolog/monolog",
+            "version": "1.18.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
+                "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
                 "shasum": ""
             },
             "require": {
@@ -1132,13 +1154,21 @@
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
                 "jakub-onderka/php-parallel-lint": "0.9",
+<<<<<<< HEAD
                 "php-amqplib/php-amqplib": "~2.4",
+=======
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
                 "php-console/php-console": "^3.1.3",
                 "phpunit/phpunit": "~4.5",
                 "phpunit/phpunit-mock-objects": "2.3.0",
                 "raven/raven": "^0.13",
                 "ruflin/elastica": ">=0.90 <3.0",
+<<<<<<< HEAD
                 "swiftmailer/swiftmailer": "~5.3"
+=======
+                "swiftmailer/swiftmailer": "~5.3",
+                "videlalvaro/php-amqplib": "~2.4"
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
@@ -1147,11 +1177,19 @@
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+<<<<<<< HEAD
                 "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
                 "php-console/php-console": "Allow sending log messages to Google Chrome",
                 "raven/raven": "Allow sending log messages to a Sentry server",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
+=======
+                "php-console/php-console": "Allow sending log messages to Google Chrome",
+                "raven/raven": "Allow sending log messages to a Sentry server",
+                "rollbar/rollbar": "Allow sending log messages to Rollbar",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
+                "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
             },
             "type": "library",
             "extra": {
@@ -1182,7 +1220,11 @@
                 "logging",
                 "psr-3"
             ],
+<<<<<<< HEAD
             "time": "2016-04-02 13:12:58"
+=======
+            "time": "2016-03-13 16:08:35"
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
         },
         {
             "name": "paragonie/random_compat",
@@ -1271,6 +1313,7 @@
             "time": "2012-12-21 11:40:51"
         },
         {
+<<<<<<< HEAD
             "name": "react/promise",
             "version": "v2.4.0",
             "source": {
@@ -1315,6 +1358,8 @@
             "time": "2016-03-31 13:10:33"
         },
         {
+=======
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
             "name": "sensio/distribution-bundle",
             "version": "v5.0.5",
             "source": {
@@ -1526,6 +1571,7 @@
             "time": "2015-06-06 14:19:39"
         },
         {
+<<<<<<< HEAD
             "name": "symfony/assetic-bundle",
             "version": "v2.8.0",
             "source": {
@@ -1596,6 +1642,8 @@
             "time": "2015-12-28 13:12:39"
         },
         {
+=======
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
             "name": "symfony/monolog-bundle",
             "version": "v2.10.0",
             "source": {
@@ -2186,6 +2234,7 @@
     ],
     "packages-dev": [
         {
+<<<<<<< HEAD
             "name": "myclabs/deep-copy",
             "version": "1.5.0",
             "source": {
@@ -3223,6 +3272,8 @@
             "time": "2016-02-04 12:56:52"
         },
         {
+=======
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
             "name": "sensio/generator-bundle",
             "version": "v3.0.6",
             "source": {
@@ -3336,7 +3387,16 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
+<<<<<<< HEAD
         "php": ">=7.0"
     },
     "platform-dev": []
+=======
+        "php": ">=5.5.9"
+    },
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "5.5.9"
+    }
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
 }

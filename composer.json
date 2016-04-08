@@ -26,6 +26,7 @@
         "symfony/monolog-bundle": "^2.8",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
+<<<<<<< HEAD
         "incenteev/composer-parameter-handler": "^2.0",
         "elasticsearch/elasticsearch": "~2.0",
         "symfony/assetic-bundle": "^2.8"
@@ -35,6 +36,13 @@
         "symfony/phpunit-bridge": "^3.0",
         "phpunit/phpunit": "5.3.*"
         
+=======
+        "incenteev/composer-parameter-handler": "^2.0"
+    },
+    "require-dev": {
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^3.0"
+>>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
     },
     "scripts": {
         "post-install-cmd": [
