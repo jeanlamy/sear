@@ -1,0 +1,24 @@
+{
+  "name": "sear",
+  "homepage": "https://github.com/jeanlamy/sear",
+  "authors": [
+    "Jean LAMY <jean@sedi-equipement.fr>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}

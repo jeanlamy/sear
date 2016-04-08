@@ -1,0 +1,54 @@
+{
+    "settings": {
+        "mappings": {
+            "product": {
+                "properties": {
+                    "product_name": {
+                        "type": "multi_field",
+                        "fields": {
+                            "exact": {
+                                "type": "string",
+                                "index": "not_analyzed",
+                                "store": "yes"
+                            },
+                            "shingles": {
+                                "type": "string",
+                                "analyzer": "shingle_analyzer"
+                            },
+                            "ngrams": {
+                                "type": "string",
+                                "analyzer": "edge_ngram_analyzer"
+                            },
+                            "suggest": {
+                                "type": "completion",
+                                "analyzer": "simple",
+                                "search_analyzer": "simple",
+                                "payloads": true
+                            }
+                        }
+                    },
+                    "quantity":{
+                        "type":"integer",
+                        "index":"not-analyzed"
+                    },
+                    "brands":{
+                        "type":"string",
+                        "index":"not-analyzed"
+                    },
+                    "categories":{
+                        "type":"string",
+                        "index":"not-analyzed"
+                    },
+                    "origins":{
+                        "type":"string",
+                        "index":"not-analyzed"
+                    },
+                    "labels":{
+                        "type":"string",
+                        "index":"not-analyzed"
+                    }
+                }
+            }
+        }
+    }
+}

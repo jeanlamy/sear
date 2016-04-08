@@ -1,0 +1,39 @@
+{% extends 'layout.bootstrap.html.twig' %}
+
+{% block body %}
+    <h1>Hello on sear page</h1>
+    <div class="row">
+        
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="input-group">
+                <input style="float:none" id="q" name="q" type="text" class="form-control typeahead" placeholder="Que cherchez-vous?">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button">Chercher</button>
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+    
+var productSearch = new Bloodhound({
+     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+   
+    remote: {
+      url: 'search/suggest/%QUERY',
+      wildcard: '%QUERY'
+    }
+});    
+    
+$(".typeahead").typeahead(null,{
+   name:'product-search',
+   display:'value',
+   source: productSearch
+});    
+        
+</script>
+
+    
+{% endblock %}
