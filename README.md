@@ -20,4 +20,16 @@ Field Mapping can be found here :
 
 ### How can I run it?
 
+### Todo
+
+* Add index creation in ElasticSearch Service.
+* Add index deletion in ElasticSearch Service.
+* Set index mapping for search suggestions.
+* Complete index mapping "au fur et à mesure".
+* Go on on search results.
+* Write a how to use.
+* See how to use with Docker.
+
+
+
 
