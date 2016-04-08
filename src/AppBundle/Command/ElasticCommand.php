@@ -17,7 +17,7 @@ class ElasticCommand extends ContainerAwareCommand
             ->addArgument(
                 'action',
                 InputArgument::REQUIRED,
-                'Acceptable action values are :index|delete|update'
+                'Acceptable action values are :index|create'
             );
         
     }
@@ -33,6 +33,10 @@ class ElasticCommand extends ContainerAwareCommand
         if($action == 'index') {
             $this->populateIndexFromCSV($input, $output);
         }
+        if($action == 'create') {
+            $this->createIndex($input, $output);
+        }
+
 
         $now = new \DateTime();
         $output->writeln('<comment>End : ' . $now->format('d-m-Y G:i:s') . ' ---</comment>');
@@ -67,7 +71,8 @@ class ElasticCommand extends ContainerAwareCommand
                  ]
                ];
                $response = $es->index($params);
-               $output->writeln('<comment>Indexation : '.json_encode($response).'</comment>');
+               $output->writeln('<info>Indexation de : '.json_encode($params).'</info>');
+               $output->writeln('<info>Indexation, résultat : '.json_encode($response).'</info>');
            }
         }
         //$output->writeln(print_r($data, true));
@@ -82,6 +87,13 @@ class ElasticCommand extends ContainerAwareCommand
         $data = $cta->convert($fileName, "\t");
 
         return $data;
+    }
+
+    protected function createIndex(InputInterface $input, OutputInterface $output)
+    {
+        $es = $this->getContainer()->get('app.elasticsearch');
+        $response = $es->createIndex();
+        $output->writeln('<info> Result : '.json_encode($response).'</info>');
     }
 
 

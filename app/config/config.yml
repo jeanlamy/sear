@@ -66,11 +66,10 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-<<<<<<< HEAD
+
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
     filters:
         cssrewrite: ~
-=======
->>>>>>> fd69116545b6d8a47f1b3de4634990b5a16c5b26
+

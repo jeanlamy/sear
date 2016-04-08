@@ -16,7 +16,22 @@ class SearchController extends Controller
     {
         return $this->render('search/index.twig');
         
+    }
 
+
+    /**
+     *
+     * @Route("/search/suggest/{term}")
+     */
+    public function suggestAction($term)
+    {
+        
+        $es = $this->get('app.elasticsearch');
+        $results = $es->getSuggestions($term);
+        $response = new Response();
+        $response->setContent(json_encode($results));
+        $response->header->set('Content-type', 'application/json');
+        return $response;
     }
 
 }

@@ -22,7 +22,7 @@ var productSearch = new Bloodhound({
     queryTokenizer: Bloodhound.tokenizers.whitespace,
    
     remote: {
-      url: 'search/suggest/%QUERY',
+      url: '/search/suggest/%QUERY',
       wildcard: '%QUERY'
     }
 });    
