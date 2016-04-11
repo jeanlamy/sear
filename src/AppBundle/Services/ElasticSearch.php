@@ -79,16 +79,21 @@ class ElasticSearch
             'index' => $this->indexName,
             'body' => [
 
-                'suggestions' => [
-                    'text' => $term,
-                    'completion' => [
-                        'field' => 'product_name.suggest'
+                'query' => [
+                    'match' => [
+                        '_all' => [
+                            'query' => $term,
+                            'operator' => 'and'
+                        ]
                     ]
+                    
+                    
                 ]
+                
             ]
         ];
 
-        return $this->client->suggest($params);
+        return $this->client->search($params);
     }
 
     public function createIndex()
@@ -99,62 +104,78 @@ class ElasticSearch
                 'settings' => [
                     'analysis' => [
                         'filter' => [
-                            'french_elision' => [
-                                'type' => 'elision',
-                                'articles_case' => true,
-                                'articles' => [
-                                    'l', 'm', 't', 'qu', 'n', 's', 'j', 'd', 'c',
-                                    'jusqu', 'quoiqu', 'lorsqu', 'puisqu'
+                            'ngram_filter' => [
+                                'type' => 'nGram',
+                                'min_gram' => 2,
+                                'max_gram' => 20,
+                                'token_chars' => [
+                                    'letter',
+                                    'digit',
+                                    'punctuation',
+                                    'symbol'
                                 ]
-                            ],
-                            'french_stop' => [
-                                'type' => 'stop',
-                                'stopwords' => '_french_'
-                            ],
-                            /* 'french_keywords' => [
-                              'type' => 'keyword_marker',
-                              'keywords' => []
-                              ], */
-                            'french_stemmer' => [
-                                'type' => 'stemmer',
-                                'language' => 'light_french'
                             ]
                         ],
+                        
                         'analyzer' => [
-                            'french_analyzer' => [
+                            'ngram_analyzer' => [
                                 'type' => 'custom',
-                                'tokenizer' => 'standard',
+                                'tokenizer' => 'whitespace',
                                 'filter' => [
-                                    'french_elision',
                                     'lowercase',
-                                    'french_stop',
-                                    /*    'french_keywords', */
-                                    'french_stemmer'
+                                    'asciifolding',
+                                    'ngram_filter'
+                                ]
+                            ],
+                            'whitespace_analyzer' => [
+                                'type' => 'custom',
+                                'tokenizer' => 'whitespace',
+                                'filter' => [
+                                    'lowercase',
+                                    'asciifolding'
                                 ]
                             ]
                         ]
                     ]
                 ],
                 'mappings' => [
-                    '_default_' => [
+                    'product' => [
+                        '_all' => [
+                            'analyzer' => 'ngram_analyzer',
+                            'search_analyzer' => 'whitespace_analyzer'
+                        ],
                         'properties' => [
                             'product_name' => [
                                 'type' => 'string',
-                                'fields' => [
-                                    'raw' => [
-                                        'type' => 'string',
-                                        'index' => 'not_analyzed'
-                                    ],
-                                    'analyzed' => [
-                                        'type' => 'string',
-                                        'analyzer' => 'french_analyzer'
-                                    ],
-                                    'suggest' => [
-                                        'type' => 'completion',
-                                        'payloads' => true
-                                    ]
-                                ]
+                                'index' => 'not_analyzed'
+                            ],
+                            'quantity' => [
+                                'type' => 'string',
+                                'index' => 'not_analyzed',
+                                'include_in_all' => false
+                            ],
+                            'brands' => [
+                                'type' => 'string',
+                                'index' => 'not_analyzed'
+                            ],
+                            'categories_fr' => [
+                                'type' => 'string',
+                                'index' => 'not_analyzed'
+                            ],
+                            'labels_fr' => [
+                                'type' => 'string',
+                                'index' => 'not_analyzed'
+                            ],
+                            'countries_fr' => [
+                                'type' => 'string',
+                                'index' => 'not_analyzed',
+                                'include_in_all' => false
+                            ],
+                            'ingredients_text' => [
+                                'type' => 'string',
+                                'index' => 'not_analyzed'
                             ]
+
                         ]
                     ]
                 ]

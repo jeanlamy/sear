@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -8,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SearchController extends Controller
 {
+
     /**
      *
      * @return Response
@@ -16,9 +18,7 @@ class SearchController extends Controller
     public function indexAction()
     {
         return $this->render('search/index.twig');
-        
     }
-
 
     /**
      *
@@ -26,15 +26,19 @@ class SearchController extends Controller
      */
     public function suggestAction($term)
     {
-        
-        $es = $this->get('app.elasticsearch');
+
+        $es      = $this->get('app.elasticsearch');
         $results = $es->getSuggestions($term);
         
-        $s = array();
-        foreach($results['suggestions'][0]['options'] as $row) {
-            $s[] = [ 'value' => $row['text']];
+        $s       = array();
+        foreach ($results['hits']['hits'] as $row) {
+            $s[] = $row['_source']['product_name'];
         }
-        return new JsonResponse($s);
+        $s = array_unique($s);
+        $res = array();
+        foreach($s as $value) {
+            $res[] = ['value' => $value];
+        }
+        return new JsonResponse($res);
     }
-
 }
