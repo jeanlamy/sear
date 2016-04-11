@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Hello on sear page</h1>
     <div class="row">
-        
+
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="input-group">
                 <input style="float:none" id="q" name="q" type="text" class="form-control typeahead" placeholder="Que cherchez-vous?">
@@ -15,25 +15,46 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-<script type="text/javascript">
-    
-var productSearch = new Bloodhound({
-     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-   
-    remote: {
-      url: '/search/suggest/%QUERY',
-      wildcard: '%QUERY'
-    }
-});    
-    
-$(".typeahead").typeahead(null,{
-   name:'product-search',
-   display:'value',
-   source: productSearch
-});    
-        
-</script>
+    <script type="text/javascript">
+        {% verbatim %}
+            $(document).ready(function () {
 
-    
+                // Set the Options for "Bloodhound" Engine
+                var my_Suggestion_class = new Bloodhound({
+                    limit: 10,
+                    datumTokenizer: function (datum) {
+                        return Bloodhound.tokenizers.whitespace(datum.value);
+                    },
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    remote: {
+                        url: '/search/suggest/%QUERY',
+                        wildcard: '%QUERY'
+
+                    }
+                });
+
+                //Initialize the Suggestion Engine
+                my_Suggestion_class.initialize();
+
+                var typeahead_elem = $('.typeahead');
+                typeahead_elem.typeahead(
+                        {
+                            minLength: 3
+                        },
+                        {
+                            name: 'value',
+                            display: 'value',
+                            source: my_Suggestion_class.ttAdapter(),
+                            templates:{
+                                footer: function(data) {
+                                    return "<small class=\"pull-right\">Suggestions de recherche</small>";
+                                }
+                            }
+
+                        });
+            });
+        {% endverbatim %}
+    </script>
+
+
 {% endblock %}

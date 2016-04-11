@@ -17,7 +17,7 @@ class ElasticCommand extends ContainerAwareCommand
             ->addArgument(
                 'action',
                 InputArgument::REQUIRED,
-                'Acceptable action values are :index|create'
+                'Acceptable action values are :index|create|delete'
             );
         
     }
@@ -31,10 +31,15 @@ class ElasticCommand extends ContainerAwareCommand
 
         $action = $input->getArgument('action');
         if($action == 'index') {
+            ini_set('memory_limit', '2048M');
             $this->populateIndexFromCSV($input, $output);
         }
         if($action == 'create') {
+            
             $this->createIndex($input, $output);
+        }
+        if($action == 'delete') {
+            $this->deleteIndex($input, $output);
         }
 
 
@@ -49,39 +54,16 @@ class ElasticCommand extends ContainerAwareCommand
 
         //Get elasticsearch service
         $es = $this->getContainer()->get('app.elasticsearch');
+        $response = $es->index($data);
+        $output->writeln('<info>Indexation, résultat : '.json_encode($response).'</info>');
+        
        
-
-        foreach($data as $row) {
-           if($row['product_name']) {
-               
-               $params = [
-                 'index' => 'foodfacts',
-                 'type' => 'product',
-                 'id' => $row['code'],
-                 'body' => [
-                     'product_name'     => $row['product_name'],
-                     'quantity'         => $row['quantity'],
-                     'brands'           => explode(',',$row['brands']),
-                     'categories_fr'    => explode(',',$row['categories_fr']),
-                     'origins_fr'       => explode(',',$row['origins']),
-                     'labels_fr'        => explode(',',$row['labels']),
-                     'countries_fr'     => explode(',',$row['countries_fr']),
-                     'ingredients_text' => $row['ingredients_text']
-                     
-                 ]
-               ];
-               $response = $es->index($params);
-               $output->writeln('<info>Indexation de : '.json_encode($params).'</info>');
-               $output->writeln('<info>Indexation, résultat : '.json_encode($response).'</info>');
-           }
-        }
-        //$output->writeln(print_r($data, true));
 
     }
 
     protected function get(InputInterface $input, OutputInterface $output)
     {
-        $fileName = 'web/upload/fr.openfoodfacts.org.products.10.csv';
+        $fileName = 'web/upload/fr.openfoodfacts.org.products.csv';
          // Using service for converting CSV to PHP Array
         $cta = $this->getContainer()->get('app.csvtoarray');
         $data = $cta->convert($fileName, "\t");
@@ -93,6 +75,13 @@ class ElasticCommand extends ContainerAwareCommand
     {
         $es = $this->getContainer()->get('app.elasticsearch');
         $response = $es->createIndex();
+        $output->writeln('<info> Result : '.json_encode($response).'</info>');
+    }
+
+    protected function deleteIndex(InputInterface $input, OutputInterface $output)
+    {
+        $es = $this->getContainer()->get('app.elasticsearch');
+        $response = $es->deleteIndex();
         $output->writeln('<info> Result : '.json_encode($response).'</info>');
     }
 

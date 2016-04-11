@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SearchController extends Controller
 {
@@ -28,10 +29,12 @@ class SearchController extends Controller
         
         $es = $this->get('app.elasticsearch');
         $results = $es->getSuggestions($term);
-        $response = new Response();
-        $response->setContent(json_encode($results));
-        $response->header->set('Content-type', 'application/json');
-        return $response;
+        
+        $s = array();
+        foreach($results['suggestions'][0]['options'] as $row) {
+            $s[] = [ 'value' => $row['text']];
+        }
+        return new JsonResponse($s);
     }
 
 }
