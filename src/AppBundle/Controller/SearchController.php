@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends Controller
 {
@@ -48,21 +49,23 @@ class SearchController extends Controller
      *
      *
      * @param type $term search term
-     * @param type $filters optional filters
-     * @Route("/search/results/{term}/{filters}", defaults={"filters" = ""}, name="search_results")
+     * @Route("/search/results/{term}", name="search_results")
      */
-    public function resultsAction($term, $filters)
+    public function resultsAction($term)
     {
+        $request = Request::createFromGlobals();
         $es      = $this->get('app.elasticsearch');
-        $from = 10;
+        $from = 0;
         $size = 20;
-
-        $filters = explode(',',$filters);
+        $categories = $request->get('categories');
+        $countries = $request->get('countries');
+        $filters = [
+            'categories' => $categories,
+            'countries' => $countries
+        ];
         
-        $results = $es->search($term, (array)$filters, $from, $size);
+        $results = $es->search($term, $filters, $from, $size);
         
-        
-
         return $this->render('search/results.html.twig', array(
             'results' => $results,
             'term' => $term,

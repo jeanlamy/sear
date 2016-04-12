@@ -1,36 +1,46 @@
 {# Results.twig template : display search results and aggregation #}
 
 <div class="row" style="margin-top:20px">
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-3 col-sm-4" style="font-size:12px">
+        <p>J'ai trouvé <strong>{{ results.hits.total }}</strong> produits.</p>
+        
         <strong>Par catégories</strong><br />
         <ul style="list-style-type:none">
-        {%for category in results.aggregations.categories.buckets %}
-            <li><input id="{{ category.key }}" class="filter" name="categories[]" type="checkbox" value="{{ category.key }}" />{{ category.key }} ({{ category.doc_count }})</li>
+        {%for category in results.aggregations.categories.categories.buckets %}
+            <li><input
+                    
+                    {%if category.key in filters.categories %}checked{% endif %}
+                    id="category_{{ category.key|md5 }}" class="filter categories" name="categories[]" 
+                    type="checkbox" value="{{ category.key }}" />{{ category.key }} ({{ category.doc_count }})</li>
             
             
         {% endfor %}
         </ul>
         <strong>Par pays</strong><br />
         <ul>
-        {%for country in results.aggregations.countries.buckets %}
-            <li><input id="{{ country.key }}" class="filter" name="countries[]" type="checkbox" value="{{ country.key }}" />{{ country.key }} ({{ country.doc_count }})</li>
+        {%for country in results.aggregations.countries.countries.buckets %}
+            <li><input
+                    {%if country.key in filters.countries %}checked{% endif %}
+                    id="country_{{ country.key|md5 }}" class="filter countries" name="countries[]" type="checkbox" 
+                    value="{{ country.key }}" />{{ country.key }} ({{ country.doc_count }})</li>
             
             
         {% endfor %}
         </ul>
          <strong>Par marque</strong><br />
         <ul>
-        {%for brand in results.aggregations.brands.buckets %}
-            <li><input id="{{ brand.key }}" class="filter" name="brands[]" type="checkbox" value="{{ brand.key }}" />{{ brand.key|default('Sans marque') }} ({{ brand.doc_count}})</li>
+        {%for brand in results.aggregations.brands.brands.buckets %}
+            <li><input
+                    
+                    id="brand_{{ brand.key|md5 }}" class="filter brands" name="brands[]" type="checkbox" 
+                    value="{{ brand.key }}" />{{ brand.key|default('Sans marque') }} ({{ brand.doc_count}})</li>
             
             
         {% endfor %}
         </ul>
         
     </div>
-    <div class="col-md-8 col-sm-8">
-
-        <span class="text-primary">{{ results.hits.total }}</span> produits correspondent à votre recherche <strong>{{ term }}</strong>.
+    <div class="col-md-9 col-sm-8">
 
         <div class="row">
 

@@ -17,35 +17,54 @@
         <div id="results">
         </div>
     </section>
-    
+
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript">
         {% verbatim %}
             $(document).ready(function () {
-                
-                $("#btn-search").on("click", function(){
-                    
-                    var url = "/search/results/"+encodeURIComponent($("#q").val());
+
+                $("#btn-search").on("click", function () {
+
+                    var url = "/search/results/" + encodeURIComponent($("#q").val());
                     console.log(url);
-                    
+
                     $("#results").load(url);
                 });
-                
-                $("body").on("click",".filter", function(){
-                   var checkedVals = []; 
-                   $(".filter:checked").each(function(){
-                      checkedVals.push($(this).val());
-                   });
+
+                $("body").on("click", ".filter", function () {
+
+                    var url = "/search/results/" + encodeURIComponent($("#q").val());
+                    
+                    /* Get checked categories */
+                    var categories = [];
+                    $(".categories:checked").each(function(){
+                        categories.push($(this).val());
+                    });
+                    /* Get check countries */
+                    var countries = [];
+                    $(".countries:checked").each(function(){
+                       countries.push($(this).val()); 
+                    });
+                    
+                    
+                    var data = {
+                        'categories' : categories,
+                        'countries': countries
+                    };
+
+                    $.post(url, data, function (ret) {
+                        $("#results").html(ret);
+                    });
+
+
+
+
                    
-                    
-                   var url = "/search/results/"+encodeURIComponent($("#q").val())+"/";
-                   url += encodeURIComponent(checkedVals.join(','));
-                    $("#results").load(url);
                 });
-                
-                
-                
+
+
+
                 // Set the Options for "Bloodhound" Engine
                 var my_Suggestion_class = new Bloodhound({
                     limit: 10,
@@ -72,8 +91,8 @@
                             name: 'value',
                             display: 'value',
                             source: my_Suggestion_class.ttAdapter(),
-                            templates:{
-                                footer: function(data) {
+                            templates: {
+                                footer: function (data) {
                                     return "<small class=\"pull-right\" style=\"margin-right:10px\">Suggestions de recherche by @Sear</small>";
                                 }
                             }

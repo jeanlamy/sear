@@ -112,22 +112,7 @@ class ElasticSearch
     public function search(string $term, array $filters = array(),
                            int $from = 0, int $size = 10)
     {
-        $filters_json = array();
-        
-        $end = array();
-        foreach($filters as $filter) {
-            if($filter) {
-               $end[] = $filter;
-            }
-        }
 
-        if (count($end)) {
-            $filters_json = [
-                'terms' => [
-                    'categories_fr' => $end
-                ]
-            ];
-        }
 
         $params = [
             'index' => $this->indexName,
@@ -135,38 +120,98 @@ class ElasticSearch
                 'from' => $from,
                 'size' => $size,
                 'query' => [
-                    'filtered' => [
-                        'query' => [
-                            'match' => [
-                                '_all' => [
-                                    'query' => $term,
-                                    'operator' => 'and'
-                                ]
-                            ]
-                        ],
-                        'filter' => $filters_json
+
+                    'match' => [
+                        '_all' => [
+                            'query' => $term,
+                            'operator' => 'and'
+                        ]
                     ]
                 ],
                 'aggs' => [
                     'categories' => [
-                        'terms' => [
-                            'field' => 'categories_fr'
+                        'filter' => [
+                            'match_all' => []
+                        ],
+                        'aggs' => [
+                            'categories' => [
+                                'terms' => [
+                                    'field' => 'categories_fr'
+                                ]
+                            ]
                         ]
                     ],
                     'countries' => [
-                        'terms' => [
-                            'field' => 'countries_fr'
+
+                        'filter' => [
+                            'match_all' => []
+                        ],
+                        'aggs' => [
+                            'countries' => [
+                                'terms' => [
+                                    'field' => 'countries_fr'
+                                ]
+                            ]
                         ]
                     ],
                     'brands' => [
-                        'terms' => [
-                            'field' => 'brands'
+                        'filter' => [
+                            'match_all' => []
+                        ],
+                        'aggs' => [
+                            'brands' => [
+                                'terms' => [
+                                    'field' => 'brands'
+                                ]
+                            ]
                         ]
                     ]
                 ]
             ]
         ];
+        // if filtering by categories then filter countries aggregation but not categories one
+        if ($filters['categories']) {
+            $filter                                        = [
+                'terms' => [
+                    'categories_fr' => $filters['categories']
+                ]
+            ];
+            //filter countries and brands by categories
+            $params['body']['aggs']['countries']['filter'] = $filter;
+            $params['body']['aggs']['brands']['filter']    = $filter;
+            $params['body']['filter']                      = $filter;
+        }
+        if ($filters['countries']) {
 
+            //if already filtered by categories add filter
+            if (isset($filter['terms'])) {
+                $filter_term = $filter['terms'];
+                $filter      = [
+                    'and' => [
+                        ['terms' => $filter_term],
+                        ['terms' => [
+                            'countries_fr' => $filters['countries']
+                        ]]
+                    ]
+                ];
+
+                $params['body']['aggs']['brands']['filter'] = $filter;
+                $params['body']['filter']                      = $filter;
+
+
+            } else {
+                $filter = [
+                    'terms' => [
+                        'countries_fr' => $filters['countries']
+                    ]
+                ];
+                $params['body']['aggs']['brands']['filter'] = $filter;
+                $params['body']['filter']                      = $filter;
+            }
+        }
+
+
+       # echo json_encode($params['body']);exit;
         return $this->client->search($params);
     }
 
