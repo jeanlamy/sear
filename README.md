@@ -20,13 +20,14 @@ Field Mapping can be found here :
 
 ### How can I run it?
 
+```bash
   # create index
   php bin/console sear:elastic create
   # launch indexation
   php bin/console sear:elastic index
   # delete index
   php bin/console sear:elastic delete
-
+```
 
 ### Todo
 
