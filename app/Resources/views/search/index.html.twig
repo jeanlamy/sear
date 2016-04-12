@@ -8,17 +8,44 @@
             <div class="input-group">
                 <input style="float:none" id="q" name="q" type="text" class="form-control typeahead" placeholder="Que cherchez-vous?">
                 <span class="input-group-btn">
-                    <button class="btn btn-primary" type="button">Chercher</button>
+                    <button id="btn-search" class="btn btn-primary" type="button">Chercher</button>
                 </span>
             </div>
         </div>
     </div>
+    <section role="">
+        <div id="results">
+        </div>
+    </section>
+    
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript">
         {% verbatim %}
             $(document).ready(function () {
-
+                
+                $("#btn-search").on("click", function(){
+                    
+                    var url = "/search/results/"+encodeURIComponent($("#q").val());
+                    console.log(url);
+                    
+                    $("#results").load(url);
+                });
+                
+                $("body").on("click",".filter", function(){
+                   var checkedVals = []; 
+                   $(".filter:checked").each(function(){
+                      checkedVals.push($(this).val());
+                   });
+                   
+                    
+                   var url = "/search/results/"+encodeURIComponent($("#q").val())+"/";
+                   url += encodeURIComponent(checkedVals.join(','));
+                    $("#results").load(url);
+                });
+                
+                
+                
                 // Set the Options for "Bloodhound" Engine
                 var my_Suggestion_class = new Bloodhound({
                     limit: 10,

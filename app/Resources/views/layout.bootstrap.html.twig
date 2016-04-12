@@ -9,6 +9,7 @@
           href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
     <style type="text/css">
         .footer{
+            display:none;
             position: absolute;
             bottom: 0;
             width: 100%;
@@ -67,7 +68,7 @@
 </head>
 <body>
     {{include('header.bootstrap.html.twig')}}
-    <div class="container">
+    <div class="container-fluid">
     {% block body %}{% endblock %}
 </div>
 

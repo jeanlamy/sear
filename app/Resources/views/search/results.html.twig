@@ -1,0 +1,63 @@
+{# Results.twig template : display search results and aggregation #}
+
+<div class="row" style="margin-top:20px">
+    <div class="col-md-4 col-sm-4">
+        <strong>Par catégories</strong><br />
+        <ul style="list-style-type:none">
+        {%for category in results.aggregations.categories.buckets %}
+            <li><input id="{{ category.key }}" class="filter" name="categories[]" type="checkbox" value="{{ category.key }}" />{{ category.key }} ({{ category.doc_count }})</li>
+            
+            
+        {% endfor %}
+        </ul>
+        <strong>Par pays</strong><br />
+        <ul>
+        {%for country in results.aggregations.countries.buckets %}
+            <li><input id="{{ country.key }}" class="filter" name="countries[]" type="checkbox" value="{{ country.key }}" />{{ country.key }} ({{ country.doc_count }})</li>
+            
+            
+        {% endfor %}
+        </ul>
+         <strong>Par marque</strong><br />
+        <ul>
+        {%for brand in results.aggregations.brands.buckets %}
+            <li><input id="{{ brand.key }}" class="filter" name="brands[]" type="checkbox" value="{{ brand.key }}" />{{ brand.key|default('Sans marque') }} ({{ brand.doc_count}})</li>
+            
+            
+        {% endfor %}
+        </ul>
+        
+    </div>
+    <div class="col-md-8 col-sm-8">
+
+        <span class="text-primary">{{ results.hits.total }}</span> produits correspondent à votre recherche <strong>{{ term }}</strong>.
+
+        <div class="row">
+
+            {% for hit in results.hits.hits %}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail" style="height:250px;min-height: 250px">
+                        <div class="caption">
+                            <strong>
+                                {{ hit._source.product_name }}
+                                {% if hit._source.brands[0] %}
+                                    - {{ hit._source.brands[0] }}
+                                {% endif %}    
+                                
+                            </strong><br />
+                            <small>Ref : {{ hit._id }}</small>
+                        </div>
+                        {% if hit._source.image_url %}
+                        <img style="max-height:180px" src="{{hit._source.image_url}}" alt="{{ hit._source.product_name }}" />
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% endfor %}    
+        </div>
+    </div>    
+
+</div>
+
+
+
