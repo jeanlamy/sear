@@ -30,6 +30,7 @@ class ElasticSearch
     {
         $i      = 0;
         $params = ['body' => []];
+        $responses = null;
         foreach ($data as $row) {
 
             //Skip product with no name
@@ -57,7 +58,7 @@ class ElasticSearch
                 'image_url' => $row['image_url'],
                 'image_small_url' => $row['image_small_url']
             ];
-            if ($i % 100 == 0) {
+            if ($i % 1000 == 0) {
                 $responses = $this->client->bulk($params);
                 // erase the old bulk request
                 $params    = ['body' => []];
