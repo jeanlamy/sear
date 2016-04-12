@@ -31,13 +31,14 @@ Field Mapping can be found here :
 
 ### Todo
 
-* Add index creation in ElasticSearch Service.
-* Add index deletion in ElasticSearch Service.
-* Set index mapping for search suggestions.
 * Complete index mapping "au fur et à mesure".
-* Go on on search results.
-* Write a how to use.
-* See how to use with Docker.
+* Add pagination logic to search results
+* Add categories navigation to search results
+* Add product modal with all informations
+* Allow user to search product by entering an additive or ingredient name
+
+
+* See how to use it with docker
 
 
 
