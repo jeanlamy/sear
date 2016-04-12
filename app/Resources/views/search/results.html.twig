@@ -11,7 +11,7 @@
                     
                     {%if category.key in filters.categories %}checked{% endif %}
                     id="category_{{ category.key|md5 }}" class="filter categories" name="categories[]" 
-                    type="checkbox" value="{{ category.key }}" />{{ category.key }} ({{ category.doc_count }})</li>
+                    type="radio" value="{{ category.key }}" />{{ category.key }} ({{ category.doc_count }})</li>
             
             
         {% endfor %}

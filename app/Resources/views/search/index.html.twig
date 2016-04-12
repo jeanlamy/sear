@@ -32,7 +32,7 @@
                     $("#results").load(url);
                 });
 
-                $("body").on("click", ".filter", function () {
+                $("body").on("click", ".filter", function (event) {
 
                     var url = "/search/results/" + encodeURIComponent($("#q").val());
                     
@@ -46,6 +46,12 @@
                     $(".countries:checked").each(function(){
                        countries.push($(this).val()); 
                     });
+                    
+                    //reset country filter if clicked on category
+                    
+                    if($(this).hasClass("categories")) {
+                        countries = [];
+                    };
                     
                     
                     var data = {
