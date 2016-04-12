@@ -33,10 +33,9 @@ Field Mapping can be found here :
 
 * Complete index mapping "au fur et à mesure".
 * Add pagination logic to search results
-* Add categories navigation to search results
 * Add product modal with all informations
 * Allow user to search product by entering an additive or ingredient name
-
+* Add bulk mode for index by CSV
 
 * See how to use it with docker
 
