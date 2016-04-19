@@ -31,13 +31,12 @@ Field Mapping can be found here :
 
 ### Todo
 
-* Complete index mapping "au fur et à mesure".
+* Load CSV to Memcached or SQlite temporary database
 * Add pagination logic to search results
 * Add product modal with all informations
 * Allow user to search product by entering an additive or ingredient name
-* Add bulk mode for index by CSV
 
-* See how to use it with docker
+
 
 
 
