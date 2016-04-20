@@ -31,7 +31,7 @@ Field Mapping can be found here :
 
 ### Todo
 
-* Load CSV to Memcached or SQlite temporary database
+* Change indexation to load data from MongoDB database
 * Add pagination logic to search results
 * Add product modal with all informations
 * Allow user to search product by entering an additive or ingredient name
