@@ -3,7 +3,7 @@ Search.io : search and recommandation engine for films, series, books and music
 
 * Film and series database : imdb by using http://imdbpy.sourceforge.net/
 * Music database : musicBrainz
-* Book database : 
+* Book database : openLibrary : https://openlibrary.org/developers/dumps
 
 
 The data will be stored in a MySQL database. 
