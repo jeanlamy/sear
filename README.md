@@ -1,5 +1,14 @@
 # sear
-Search.io : search engine for products (experimentation)
+Search.io : search and recommandation engine for films, series, books and music
+
+* Film and series database : imdb by using http://imdbpy.sourceforge.net/
+* Music database : musicBrainz
+* Book database : 
+
+
+The data will be stored in a MySQL database. 
+
+
 
 ### Why?
 
